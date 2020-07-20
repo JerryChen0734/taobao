@@ -1,12 +1,20 @@
 package com.changgou.system.service;
 
-import com.changgou.pojo.Admin;
+
+import com.changgou.system.pojo.Admin;
 import com.github.pagehelper.Page;
 
 import java.util.List;
 import java.util.Map;
 
 public interface AdminService {
+
+    /**
+     *
+     * @param admin
+     * @return
+     */
+    boolean login(Admin admin);
 
     /***
      * 查询所有
@@ -16,6 +24,7 @@ public interface AdminService {
 
     /**
      * 根据ID查询
+     *
      * @param id
      * @return
      */
@@ -62,8 +71,6 @@ public interface AdminService {
      * @return
      */
     Page<Admin> findPage(Map<String, Object> searchMap, int page, int size);
-
-
 
 
 }
