@@ -148,11 +148,15 @@ public class SpuServiceImpl implements SpuService {
     public void update(Goods goods) {
         Spu spu = goods.getSpu();
         spuMapper.updateByPrimaryKeySelective(spu);
-        Example example=new Example(Sku.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("spuId",spu.getId());
-        skuMapper.deleteByExample(example);
-       saveSkuList(goods);
+        if (spu.getId()!=null) {
+            Example example=new Example(Sku.class);
+            Example.Criteria criteria = example.createCriteria();
+            criteria.andEqualTo("spuId",spu.getId());
+            skuMapper.deleteByExample(example);
+            saveSkuList(goods);
+        }
+        throw new RuntimeException("spu 等于空");
+
     }
 
 

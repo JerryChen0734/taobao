@@ -12,11 +12,11 @@
     <artifactId>changgou_canal</artifactId>
 
     <dependencies>
-  <!--      <dependency>
+        <dependency>
             <groupId>com.xpand</groupId>
             <artifactId>starter-canal</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>org.springframework.amqp</groupId>
             <artifactId>spring-rabbit</artifactId>
