@@ -37,3 +37,5 @@ hystrix:
           enabled: false
         isolation:
           strategy: SEMAPHORE
+
+thymeleaf.cache : false

@@ -49,5 +49,10 @@ public class SpuListener {
             System.err.println("下架消息已发出");
             rabbitTemplate.convertAndSend(RabbitMQConfig.GOODS_DOWN_EXCHANGE, "", newMap.get("id")); //发送到mq商品上架交换器上
         }
+        //获取最新审核商品
+        if ("0".equals(oldMap.get("status")) && "1".equals(newMap.get("status"))) {
+            //发送商品spuId
+            rabbitTemplate.convertAndSend(RabbitMQConfig.GOODS_UP_EXCHANGE, "", newMap.get("id"));
+        }
     }
 }

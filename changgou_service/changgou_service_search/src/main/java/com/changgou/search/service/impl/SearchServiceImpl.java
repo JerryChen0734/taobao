@@ -120,7 +120,7 @@ public class SearchServiceImpl implements SearchService {
                                 for (SearchHit hit : hits) {
                                     SkuInfo skuInfo = JSON.parseObject(hit.getSourceAsString(), SkuInfo.class);
                                     Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-                                    if (highlightFields != null && highlightFields.size()>0){
+                                    if (highlightFields != null && highlightFields.size() > 0) {
                                         //替换数据
                                         skuInfo.setName(highlightFields.get("name").getFragments()[0].toString());
                                     }
@@ -147,13 +147,36 @@ public class SearchServiceImpl implements SearchService {
             //15、封装规格分组结果
             StringTerms specTerms = (StringTerms) aggregatedPage.getAggregation(skuSpec);
             List<String> specList = specTerms.getBuckets().stream().map(bucket -> bucket.getKeyAsString()).collect(Collectors.toList());
-            resultMap.put("specList", specList(specList));
+
+            resultMap.put("specList", formartSpec(specList));
+
 
             //16. 返回当前页
             resultMap.put("pageNum", pageNum);
             return resultMap;
         }
         return null;
+    }
+
+    public Map<String, Set<String>> formartSpec(List<String> specList) {
+        Map<String, Set<String>> resultMap = new HashMap<>();
+        if (specList != null && specList.size() > 0) {
+            for (String specJsonString : specList) {  //"{'颜色': '黑色', '尺码': '250度'}"
+                //将获取到的json转换为map
+                Map<String, String> specMap = JSON.parseObject(specJsonString, Map.class);
+                for (String specKey : specMap.keySet()) {
+                    Set<String> specSet = resultMap.get(specKey);
+                    if (specSet == null) {
+                        specSet = new HashSet<String>();
+                    }
+                    //将规格信息存入set中
+                    specSet.add(specMap.get(specKey));
+                    //将set存入map
+                    resultMap.put(specKey, specSet);
+                }
+            }
+        }
+        return resultMap;
     }
 
     //处理规格集合
