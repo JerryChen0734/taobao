@@ -18,7 +18,6 @@
         <module>changgou_common_db</module>
 		<module>changgou_canal</module>
     </modules>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
